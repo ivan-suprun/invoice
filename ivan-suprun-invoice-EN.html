@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ivan Suprun — Invoice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F2EA; --ink:#1C1A17; --ink-soft:#5C564D; --rule:#D8D1C4; --red:#8E3B2B;
+    --serif:'Fraunces', Georgia, serif;
+    --sans:'Inter', -apple-system, Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{text-wrap:pretty;}
+  body{background:#E8E3D9;color:var(--ink);font-family:var(--sans);font-weight:300;
+    text-transform:uppercase;-webkit-font-smoothing:antialiased;padding:32px 16px;}
+  p, li, div, span{orphans:3;widows:3;}
+  .sheet{position:relative;background:var(--paper);max-width:860px;margin:0 auto;padding:68px 64px 60px;}
+
+  /* ——— masthead : tight, centered ——— */
+  .masthead{text-align:center;}
+  .kicker-top{font-size:9.5px;letter-spacing:.3em;color:var(--ink);opacity:.7;margin-bottom:5px;font-weight:500;}
+  .wordmark{font-family:var(--serif);font-weight:400;font-size:35px;letter-spacing:.03em;line-height:1.1;color:var(--red);}
+  .subline{font-size:10.5px;letter-spacing:.22em;color:var(--ink-soft);margin-top:9px;}
+  .doc-num{font-family:var(--serif);font-size:12px;letter-spacing:.04em;
+    color:var(--ink-soft);opacity:.55;margin-top:6px;white-space:nowrap;}
+  .rule{height:1px;background:var(--rule);margin:16px 0 28px;}
+
+  /* ——— meta ——— */
+  .meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px;text-align:center;}
+  .meta .label{font-size:9px;letter-spacing:.22em;color:var(--red);margin-bottom:9px;font-weight:500;}
+  .meta .value{font-size:12.5px;line-height:1.75;color:var(--ink-soft);}
+  .client-name{display:block;font-family:var(--serif);font-style:normal;font-weight:600;
+    color:var(--ink);font-size:22px;letter-spacing:.01em;}
+
+  /* ——— section dividers ——— */
+  .section-head{display:flex;align-items:center;gap:18px;margin:52px 0 24px;}
+  .section-head .line{flex:1;height:1px;background:var(--rule);}
+  .section-head .label{white-space:nowrap;text-align:center;font-size:12px;letter-spacing:.26em;
+    color:var(--ink-soft);font-weight:500;}
+  .section-head .label em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--red);margin-right:8px;}
+
+  /* ——— narrative ——— */
+  .narrative{font-family:var(--serif);font-weight:300;font-size:16.5px;line-height:1.85;
+    letter-spacing:.01em;max-width:56ch;margin:0 auto;text-align:center;color:var(--ink);}
+  .narrative em{font-style:italic;color:var(--red);}
+
+  /* ——— items ——— */
+  .col-head{display:grid;grid-template-columns:1fr 150px;gap:24px;
+    font-size:9.5px;letter-spacing:.22em;color:var(--ink-soft);padding-bottom:14px;font-weight:500;}
+  .col-head span:last-child{text-align:right;}
+  .item{display:grid;grid-template-columns:1fr 150px;gap:24px;padding:28px 0;
+    border-bottom:1px solid var(--rule);align-items:start;}
+  .item:first-of-type{border-top:1px solid var(--rule);}
+  .item-date{font-size:11px;letter-spacing:.16em;color:var(--red);margin-bottom:10px;font-weight:500;}
+  .item-name{font-family:var(--serif);font-size:25px;font-weight:500;line-height:1.28;letter-spacing:.01em;}
+  .item-desc{font-family:var(--sans);font-size:12.5px;line-height:1.9;color:var(--ink-soft);
+    margin-top:13px;max-width:44ch;letter-spacing:.01em;font-weight:300;}
+  .item-desc ul{list-style:none;margin-top:8px;}
+  .item-desc li{padding-left:16px;position:relative;margin-top:6px;}
+  .item-desc li:before{content:"—";position:absolute;left:0;color:var(--rule);}
+  .item-price{text-align:right;padding-top:2px;}
+  .item-rate{font-size:10px;letter-spacing:.12em;color:var(--ink-soft);margin-bottom:7px;font-variant-numeric:tabular-nums;}
+  .item-amount{font-family:var(--serif);font-size:27px;letter-spacing:.02em;font-weight:500;
+    color:var(--red);font-variant-numeric:tabular-nums;}
+
+  /* ——— totals ——— */
+  .totals{margin-top:34px;display:flex;justify-content:flex-end;}
+  .totals-inner{width:380px;}
+  .total-row{display:flex;justify-content:space-between;gap:20px;padding:9px 0;font-size:12px;
+    color:var(--ink-soft);font-variant-numeric:tabular-nums;letter-spacing:.03em;}
+  .total-row.grand{border-top:1px solid var(--ink);margin-top:14px;padding-top:22px;color:var(--ink);}
+  .total-row.grand .k{font-size:13px;letter-spacing:.24em;align-self:center;font-weight:500;}
+  .total-row.grand .v{font-family:var(--serif);font-size:44px;letter-spacing:.02em;font-weight:500;color:var(--red);}
+
+  /* ——— notes ——— */
+  .note-body{font-family:var(--sans);font-size:13px;line-height:1.9;color:var(--ink-soft);
+    max-width:66ch;margin:0 auto;letter-spacing:.01em;font-weight:300;}
+  .note-body strong{font-weight:500;color:var(--ink);}
+  .note-body .money{color:var(--red);font-weight:500;}
+  .note-body p+p{margin-top:16px;}
+
+  /* ——— closing ——— */
+  .closing{margin-top:56px;padding-top:32px;border-top:1px solid var(--rule);text-align:center;
+    font-family:var(--serif);font-style:italic;font-weight:300;font-size:13.5px;line-height:1.85;
+    color:var(--ink-soft);letter-spacing:.02em;
+    max-width:44ch;margin-left:auto;margin-right:auto;}
+  .signoff{margin-top:10px;font-style:normal;font-weight:400;font-size:19px;letter-spacing:.04em;
+    color:var(--red);text-transform:uppercase;}
+  .quote-accent{font-weight:700;color:var(--ink);}
+  .footer{margin-top:44px;text-align:center;font-size:9.5px;letter-spacing:.2em;color:var(--ink-soft);}
+  .footer div+div{margin-top:6px;}
+
+  @page{size:A4;margin:14mm;}
+  @media print{body{background:#fff;padding:0;} .sheet{max-width:none;padding:0;background:#fff;} .item{break-inside:avoid;}}
+  @media(max-width:640px){
+    .sheet{padding:44px 26px;}
+    .doc-num{font-size:12px;}
+    .meta{grid-template-columns:1fr;gap:26px;}
+    .wordmark{font-size:28px;}
+    .item,.col-head{grid-template-columns:1fr 96px;gap:14px;}
+    .item-amount{font-size:21px;}
+    .total-row.grand .v{font-size:34px;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="masthead">
+    <div class="wordmark">Ivan Suprun</div>
+    <div class="subline">Private Image Curation · London</div>
+    <div class="doc-num">№ IS-2026-014</div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="meta">
+    <div>
+      <div class="label">Issued To</div>
+      <div class="value"><span class="client-name">Jūta</span></div>
+    </div>
+    <div>
+      <div class="label">Occasion</div>
+      <div class="value">Wedding — Two Days<br>4–6 July 2026<br>Latvia</div>
+    </div>
+    <div>
+      <div class="label">Invoice Details</div>
+      <div class="value">Issued 22 July 2026<br>Currency — GBP (£)</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <span class="line"></span>
+    <span class="label"><em>I</em>The Engagement</span>
+    <span class="line"></span>
+  </div>
+  <p class="narrative">
+    A complete <em>bridal image direction</em> for a two-day wedding: four finished looks,
+    developed over a preparation period of roughly two months and executed on site across
+    both days. The work is billed in two parts — the <em>preparation</em>, a fixed creative
+    fee, and the <em>days themselves</em>, billed at a day rate.
+  </p>
+
+  <div class="section-head">
+    <span class="line"></span>
+    <span class="label"><em>II</em>Services Rendered</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="col-head"><span>Description</span><span>Amount</span></div>
+
+  <div class="item">
+    <div>
+      <div class="item-date">Preparation · May – July 2026</div>
+      <div class="item-name">Consultation &amp; Image Development</div>
+      <div class="item-desc">
+        Four consultation sessions held across the preparation period, together with the
+        curation work between them:
+        <ul>
+          <li>Definition of the bridal image direction for both days</li>
+          <li>Selection and approval of four complete looks</li>
+          <li>Coordination of fittings, alterations and accessories</li>
+          <li>Ongoing counsel and final sign-off before the wedding</li>
+        </ul>
+      </div>
+    </div>
+    <div class="item-price">
+      <div class="item-rate">4 × £500</div>
+      <div class="item-amount">£2,000</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div>
+      <div class="item-date">Day One · 4 July — Ceremony</div>
+      <div class="item-name">Styling Direction &amp; Look Support</div>
+      <div class="item-desc">
+        Full-day attendance on site. Two complete looks:
+        <ul>
+          <li>Ceremony look — final styling and dressing</li>
+          <li>Evening change — second look for the celebration</li>
+        </ul>
+      </div>
+    </div>
+    <div class="item-price">
+      <div class="item-rate">1 Day</div>
+      <div class="item-amount">£1,500</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div>
+      <div class="item-date">Day Two · 5 July — Celebrations</div>
+      <div class="item-name">Styling Direction &amp; Look Support</div>
+      <div class="item-desc">
+        Full-day attendance on site. Two complete looks:
+        <ul>
+          <li>Brunch look — morning styling and dressing</li>
+          <li>Dinner look — evening styling and dressing</li>
+        </ul>
+      </div>
+    </div>
+    <div class="item-price">
+      <div class="item-rate">1 Day</div>
+      <div class="item-amount">£1,500</div>
+    </div>
+  </div>
+
+  <div class="totals">
+    <div class="totals-inner">
+      <div class="total-row"><span>Consultation &amp; Image Development</span><span>£2,000</span></div>
+      <div class="total-row"><span>Attendance — Two Days at £1,500</span><span>£3,000</span></div>
+      <div class="total-row grand"><span class="k">Total Due</span><span class="v">£5,000</span></div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <span class="line"></span>
+    <span class="label"><em>III</em>Notes On The Fee</span>
+    <span class="line"></span>
+  </div>
+  <div class="note-body">
+    <p>The <strong>day rate</strong> of <span class="money">£1,500</span> covers full-day attendance
+    on site — hair and makeup coordination, styling and dressing for each look. Two complete looks
+    were delivered on each day, four in total.</p>
+    <p><strong>Consultation</strong> is billed as four sessions at <span class="money">£500</span>.
+    It covers the whole preparation period rather than being metered call by call: correspondence,
+    sourcing and the curation work between sessions are included at no additional charge.</p>
+    <p>No expenses, travel or third-party costs are charged on this invoice.</p>
+  </div>
+
+  <div class="closing">
+    It was a <span class="quote-accent">pleasure</span> to be part of these days!<br>Thank you for the <span class="quote-accent">trust</span>.
+    <div class="signoff">Ivan Suprun</div>
+  </div>
+
+  <div class="footer">
+    <div>Ivan Suprun · Private Image Curation</div>
+    <div>Invoice IS-2026-014</div>
+  </div>
+
+</div>
+</body>
+</html>
