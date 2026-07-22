@@ -18,13 +18,18 @@
   body{background:#E8E3D9;color:var(--ink);font-family:var(--sans);font-weight:300;
     text-transform:uppercase;-webkit-font-smoothing:antialiased;padding:32px 16px;}
   p, li, div, span{orphans:3;widows:3;}
-  .sheet{position:relative;background:var(--paper);max-width:860px;margin:0 auto;padding:68px 64px 60px;}
+  .sheet{position:relative;background:var(--paper);max-width:860px;margin:0 auto;padding:0 64px 60px;}
 
   /* ——— masthead : tight, centered ——— */
   .masthead{text-align:center;}
   .kicker-top{font-size:9.5px;letter-spacing:.3em;color:var(--ink);opacity:.7;margin-bottom:5px;font-weight:500;}
   .wordmark{font-family:var(--serif);font-weight:400;font-size:35px;letter-spacing:.03em;line-height:1.1;color:var(--red);}
   .subline{font-size:10.5px;letter-spacing:.22em;color:var(--ink-soft);margin-top:9px;}
+  .lang-switch{text-align:center;margin-bottom:13px;
+    font-family:var(--sans);font-size:9.5px;letter-spacing:.14em;}
+  .lang-switch a{color:var(--ink-soft);text-decoration:none;}
+  .lang-switch a.active{color:var(--red);font-weight:500;}
+  .lang-switch a:hover{color:var(--red);}
   .doc-num{font-family:var(--serif);font-size:12px;letter-spacing:.04em;
     color:var(--ink-soft);opacity:.55;margin-top:6px;white-space:nowrap;}
   .rule{height:1px;background:var(--rule);margin:16px 0 28px;}
@@ -109,6 +114,8 @@
 </head>
 <body>
 <div class="sheet">
+
+  <div class="lang-switch"><a href="index.html" class="active">EN</a> / <a href="index-ru.html">RU</a></div>
   <div class="masthead">
     <div class="wordmark">Ivan Suprun</div>
     <div class="subline">Private Image Curation · London</div>
